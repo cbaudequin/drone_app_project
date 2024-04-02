@@ -69,10 +69,10 @@
                 $login=$_POST["login"];
                 $password_session=$_POST["password"];
 
-                if($login=="toto" && $password_session=="michel") {
+                if($login=="toto" && $password_session=="michel"){
                     $_SESSION["login"]=$login;
                     echo "Bienvenue $login ";
-                }
+                
 
                 try {
                     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -96,6 +96,9 @@
                 } catch(PDOException $e) {
                     echo "Erreur de connexion : " . $e->getMessage();
                 }
+            }else{
+                echo "erreur de session car mauvais mot de passe mdr?";
+            }
 
                 // Ferme la connexion
                 $conn = null;
