@@ -65,6 +65,16 @@
                 $password = "goatesque";
                 $dbname = "bdd_drones";
 
+                session_start();
+
+                $login=$_POST["login"];
+                $password=$_POST["password"];
+
+                if($login=="toto" && $password=="michel") {
+                    $_SESSION["login"]=$login;
+                    echo "Bienvenue $login";
+                }
+
                 try {
                     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
