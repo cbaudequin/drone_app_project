@@ -66,13 +66,12 @@
                 $dbname = "bdd_drones";
 
                 session_start();
-
                 $login=$_POST["login"];
-                $password=$_POST["password"];
+                $password_session=$_POST["password"];
 
-                if($login=="toto" && $password=="michel") {
+                if($login=="toto" && $password_session=="michel") {
                     $_SESSION["login"]=$login;
-                    echo "Bienvenue $login";
+                    echo "Bienvenue $login ";
                 }
 
                 try {
