@@ -46,6 +46,13 @@
 </head>
 <body>
 
+    <form action="login.html" method="post">
+        <?php
+        session_destroy();
+        ?>
+        <input type="submit" value="Déconnexion">
+    </form>
+
     <div class="container">
         <p>Données de la flotte de drones :</p>
 
@@ -97,7 +104,7 @@
                     echo "Erreur de connexion : " . $e->getMessage();
                 }
             }else{
-                echo "erreur de session car mauvais mot de passe mdr?";
+                echo "Erreur de connexion, mauvais identifiant ou mot de passe. Veuillez réessayer.";
             }
 
                 // Ferme la connexion
