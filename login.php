@@ -9,8 +9,8 @@ $dbname = "bdd_drones";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des données du formulaire
-    $login = $_POST["login"];
-    $password = $_POST["password"];
+    $loginGOD = $_POST["login"];
+    $passwordGOD = $_POST["password"];
 
     try {
         // Connexion à la base de données
@@ -19,11 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Vérification des identifiants dans la table 'users'
         $stmt = $conn->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-        $stmt->execute(["username" => $login, "password" => $password]);
+        $stmt->execute(["username" => $loginGOD, "password" => $passwordGOD]);
         $user = $stmt->fetch();
 
         if ($user) {
-            $_SESSION["login"] = $login; // Authentification réussie, création de la session
+            $_SESSION["login"] = $loginGOD; // Authentification réussie, création de la session
             header("Location: main.php"); // Redirection vers la page principale après la connexion
             exit();
         } else {
