@@ -27,13 +27,11 @@ try {
         // Insertion de l'utilisateur dans la base de données
         $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
         $stmt->execute(["username" => $username, "password" => $password]);
-        // Affichage du pop-up "Inscription réussie" avec délai de 5 secondes avant la redirection
-        echo "<script>
-                setTimeout(function() {
-                    alert('Inscription réussie');
-                    window.location.href = 'login.html';
-                }, 5000);
-              </script>";
+        // Affichage du message d'inscription réussie
+        echo "<script>alert('Inscription réussie !');</script>";
+        // Redirection vers la page de connexion
+        header("Location: login.html");
+        exit(); // Assure que le script s'arrête ici pour éviter toute exécution supplémentaire
     }
 } catch(PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
