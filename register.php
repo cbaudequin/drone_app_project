@@ -73,7 +73,7 @@
             // Insertion de l'utilisateur dans la base de données
             $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
             $stmt->execute(["username" => $username, "password" => $password]);
-            echo "Inscription réussie !";
+            echo "<div class='result-message'>Inscription réussie !</div>";
         }
     } catch(PDOException $e) {
         echo "Erreur de connexion : " . $e->getMessage();
@@ -82,9 +82,8 @@
     // Fermeture de la connexion
     $conn = null;
     ?>
-    <br>
-    <a href="login.html" class="login-btn">Se connecter</a>
 </div>
+<a href="login.html" class="login-btn">Se connecter</a>
 
 </body>
 </html>
