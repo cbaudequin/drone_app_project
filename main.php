@@ -61,72 +61,67 @@
 </head>
 <body>
 
-    <form action="login.html" method="post">
+<?php
+session_start();
+if(isset($_SESSION['login'])){
+    echo '<form action="logout.php" method="post">
+            <input type="submit" value="Déconnexion" class="logout-btn">
+          </form>';
+} else {
+    echo '<form action="login.html" method="post">
+            <input type="submit" value="Connexion" class="logout-btn">
+          </form>';
+}
+?>
+
+<div class="container">
+    <p>Données de la flotte de drones :</p>
+
+    <table>
+        <tr>
+            <th>Drone ID</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Altitude</th>
+            <th>Timestamp</th>
+            <th>Battery</th>
+        </tr>
+
         <?php
-        session_destroy();
-        ?>
-        <input type="submit" value="Déconnexion" class="logout-btn">
-    </form>
+        if(isset($_SESSION['login'])) {
+            $servername = "10.170.10.19:33061";
+            $username = "clement";
+            $password = "goatesque";
+            $dbname = "bdd_drones";
 
-    <div class="container">
-        <p>Données de la flotte de drones :</p>
+            try {
+                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        <table>
-            <tr>
-                <th>Drone ID</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Altitude</th>
-                <th>Timestamp</th>
-                <th>Battery</th>
-            </tr>
+                $stmt = $conn->prepare("SELECT * FROM Drones");
+                $stmt->execute();
+                $result = $stmt->fetchAll();
 
-            <?php
-                $servername = "10.170.10.19:33061";
-                $username = "clement";
-                $password = "goatesque";
-                $dbname = "bdd_drones";
-
-                session_start();
-                $login=$_POST["login"];
-                $password_session=$_POST["password"];
-
-                if($login=="toto" && $password_session=="michel"){
-                    $_SESSION["login"]=$login;
-                    echo "Bienvenue $login ";
-                
-
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                    $stmt = $conn->prepare("SELECT * FROM Drones");
-                    $stmt->execute();
-                    $result = $stmt->fetchAll();
-
-                    foreach ($result as $row) {
-                        echo "<tr>";
-                        echo "<td>" . $row['drone_id'] . "</td>";
-                        echo "<td>" . $row['latitude'] . "</td>";
-                        echo "<td>" . $row['longitude'] . "</td>";
-                        echo "<td>" . $row['altitude'] . "</td>";
-                        echo "<td>" . $row['timestamp'] . "</td>";
-                        echo "<td>" . $row['battery'] . "</td>";
-                        echo "</tr>";
-                    }
-
-                } catch(PDOException $e) {
-                    echo "Erreur de connexion : " . $e->getMessage();
+                foreach ($result as $row) {
+                    echo "<tr>";
+                    echo "<td>" . $row['drone_id'] . "</td>";
+                    echo "<td>" . $row['latitude'] . "</td>";
+                    echo "<td>" . $row['longitude'] . "</td>";
+                    echo "<td>" . $row['altitude'] . "</td>";
+                    echo "<td>" . $row['timestamp'] . "</td>";
+                    echo "<td>" . $row['battery'] . "</td>";
+                    echo "</tr>";
                 }
-            }else{
-                echo "Erreur de connexion, mauvais identifiant ou mot de passe. Veuillez réessayer.";
-            }
 
-                // Ferme la connexion
-                $conn = null;
-            ?>
-        </table>
-    </div>
+            } catch(PDOException $e) {
+                echo "Erreur de connexion : " . $e->getMessage();
+            }
+        } else {
+            echo "<tr><td colspan='6'>Veuillez vous connecter pour accéder aux données des drones.</td></tr>";
+        }
+        ?>
+    </table>
+</div>
 
 </body>
 </html>
