@@ -21,6 +21,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin-bottom: 20px; /* Ajout de la marge entre le texte et le bouton */
         }
         .result-message {
             color: #333;
@@ -82,8 +83,8 @@
     // Fermeture de la connexion
     $conn = null;
     ?>
+    <a href="login.html" class="login-btn">Se connecter</a> <!-- Bouton déplacé sous le message -->
 </div>
-<a href="login.html" class="login-btn">Se connecter</a>
 
 </body>
 </html>
